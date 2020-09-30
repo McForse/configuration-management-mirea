@@ -1,16 +1,14 @@
 from MyLexer import MyLexer
 from MyParser import MyParser
 
-data = 'test_var = 5 // Комментарий'
-
+data = '''
+var = 1
+'''
 lexer = MyLexer()
-parser = MyParser()
-
-print('Token list:')
-
 for token in lexer.tokenize(data):
-    print('Token(type=%r, value=%r)' % (token.type, token.value))
+    print(token)
 
 print('\nParsing:')
+parser = MyParser()
 result = parser.parse(lexer.tokenize(data))
 print(result)
