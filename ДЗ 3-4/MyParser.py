@@ -5,6 +5,10 @@ from MyLexer import MyLexer
 class MyParser(Parser):
     tokens = MyLexer.tokens
 
+    @_('"(" expr_sequence ")"')
+    def expr_sequence(self, p):
+        return p.expr_sequence
+
     @_('expr "(" expr ")"')
     def expr_sequence(self, p):
         return [p.expr0, [p.expr1]]
@@ -55,6 +59,7 @@ Grammar
 expr_sequence : expr expr
 expr_sequence | expr ( expr )
 expr_sequence | expr ( expr_sequence )
+expr_sequence | ( expr_sequence )
 expr_sequence | expr_sequence expr
 expr_sequence | expr_sequence ( expr )
 expr_sequence | expr_sequence ( expr_sequence )
