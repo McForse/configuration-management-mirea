@@ -5,30 +5,39 @@ from MyLexer import MyLexer
 class MyParser(Parser):
     tokens = MyLexer.tokens
 
-    @_('LPAREN list RPAREN')
-    def statement(self, p):
-        return ('statement', p.list)
+    @_('expr "(" expr ")"')
+    def expr_sequence(self, p):
+        return [p.expr0, [p.expr1]]
 
-    @_('expr statement')
-    def expr(self, p):
-        return ('item', p.statement)
+    @_('expr "(" expr_sequence ")"')
+    def expr_sequence(self, p):
+        return [p.expr, [p.expr_sequence]]
 
-    @_('LPAREN expr RPAREN')
-    def statement(self, p):
-        return ('statement', p.list)
+    @_('expr_sequence "(" expr ")"')
+    def expr_sequence(self, p):
+        items_list = list(p.expr_sequence)
+        items_list.append([p.expr])
+        return items_list
 
-    @_('expr list')
-    def list(self, p):
-        items_list = p.list[1]
-        new_items_list = [p.expr]
-        for item in items_list:
-            new_items_list.append(item)
-        return ('list', new_items_list)
+    @_('expr_sequence "(" expr_sequence ")"')
+    def expr_sequence(self, p):
+        items_list = list(p.expr_sequence0)
+        items_list.append(p.expr_sequence1)
+        return items_list
+
+    @_('expr_sequence expr')
+    def expr_sequence(self, p):
+        items_list = list(p.expr_sequence)
+        items_list.append(p.expr)
+        return items_list
 
     @_('expr expr')
-    def list(self, p):
-        items_list = [p.expr0, p.expr1]
-        return ('list', items_list)
+    def expr_sequence(self, p):
+        return [p.expr0, p.expr1]
+
+    @_('STRING')
+    def expr(self, p):
+        return p.STRING
 
     @_('NUMBER')
     def expr(self, p):
@@ -36,18 +45,22 @@ class MyParser(Parser):
 
     @_('NAME')
     def expr(self, p):
-        return ('item', p.NAME)
-
+        return p.NAME
 
 
 '''
-Grammar                   Action
-------------------------  --------------------------------
+Grammar
+------------------------
 
-list    : expr expr
-list    | expr list
+expr_sequence : expr expr
+expr_sequence | expr ( expr )
+expr_sequence | expr ( expr_sequence )
+expr_sequence | expr_sequence expr
+expr_sequence | expr_sequence ( expr )
+expr_sequence | expr_sequence ( expr_sequence )
 
 expr    : NUMBER
 expr    | NAME
+expr    | STRING
 
 '''

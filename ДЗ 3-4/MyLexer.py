@@ -3,7 +3,7 @@ from sly import Lexer
 
 class MyLexer(Lexer):
     # Набор имен токенов
-    tokens = {NUMBER, NAME, STRING, LPAREN, RPAREN}
+    tokens = {NUMBER, NAME, STRING}
 
     # Строка, содержащая игнорируемые символы (между токенами)
     ignore = ' \t'
@@ -11,7 +11,7 @@ class MyLexer(Lexer):
     # Токен комметария
     ignore_comment = r'\#.*'
 
-    literals = {'='}
+    literals = {'(', ')', '='}
 
     # Регулярные выражения для токенов
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -24,16 +24,6 @@ class MyLexer(Lexer):
     @_(r'\d+')
     def NUMBER(self, t):
         t.value = int(t.value)
-        return t
-
-    @_(r'\(')
-    def LPAREN(self, t):
-        self.nesting_level += 1
-        return t
-
-    @_(r'\)')
-    def RPAREN(self, t):
-        self.nesting_level -= 1
         return t
 
     # Отслеживание номера строки
