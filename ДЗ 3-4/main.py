@@ -2,7 +2,7 @@ from MyLexer import MyLexer
 from MyParser import MyParser
 
 data = '''
-var = 1
+(var1 var2 var3)
 '''
 lexer = MyLexer()
 for token in lexer.tokenize(data):

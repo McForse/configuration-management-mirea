@@ -48,8 +48,7 @@ class MyLexer(Lexer):
 
 if __name__ == '__main__':
     data = '''
-((var=1)) # коммент
-var2 = 14
+(var1 var2)
 '''
     lexer = MyLexer()
     for token in lexer.tokenize(data):

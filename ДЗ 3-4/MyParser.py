@@ -5,9 +5,30 @@ from MyLexer import MyLexer
 class MyParser(Parser):
     tokens = MyLexer.tokens
 
-    @_('expr')
+    @_('LPAREN list RPAREN')
     def statement(self, p):
-        return p.expr
+        return ('statement', p.list)
+
+    @_('expr statement')
+    def expr(self, p):
+        return ('item', p.statement)
+
+    @_('LPAREN expr RPAREN')
+    def statement(self, p):
+        return ('statement', p.list)
+
+    @_('expr list')
+    def list(self, p):
+        items_list = p.list[1]
+        new_items_list = [p.expr]
+        for item in items_list:
+            new_items_list.append(item)
+        return ('list', new_items_list)
+
+    @_('expr expr')
+    def list(self, p):
+        items_list = [p.expr0, p.expr1]
+        return ('list', items_list)
 
     @_('NUMBER')
     def expr(self, p):
@@ -15,20 +36,18 @@ class MyParser(Parser):
 
     @_('NAME')
     def expr(self, p):
-        return ('var', p.NAME)
+        return ('item', p.NAME)
 
-    @_('var_assign')
-    def statement(self, p):
-        return p.var_assign
 
-    @_('NAME "=" expr')
-    def var_assign(self, p):
-        return ('var_assign', p.NAME, p.expr)
 
-    @_('NAME "=" STRING')
-    def var_assign(self, p):
-        return ('var_assign', p.NAME, p.STRING)
+'''
+Grammar                   Action
+------------------------  --------------------------------
 
-    @_('LPAREN expr RPAREN')
-    def expr(self, p):
-        return p.expr
+list    : expr expr
+list    | expr list
+
+expr    : NUMBER
+expr    | NAME
+
+'''
