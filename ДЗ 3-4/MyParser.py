@@ -15,7 +15,7 @@ class MyParser(Parser):
 
     @_('expr "(" expr_sequence ")"')
     def expr_sequence(self, p):
-        return [p.expr, [p.expr_sequence]]
+        return [p.expr, p.expr_sequence]
 
     @_('expr_sequence "(" expr ")"')
     def expr_sequence(self, p):
@@ -38,10 +38,6 @@ class MyParser(Parser):
     @_('expr expr')
     def expr_sequence(self, p):
         return [p.expr0, p.expr1]
-
-    @_('STRING')
-    def expr(self, p):
-        return p.STRING
 
     @_('NUMBER')
     def expr(self, p):
@@ -66,6 +62,5 @@ expr_sequence | expr_sequence ( expr_sequence )
 
 expr    : NUMBER
 expr    | NAME
-expr    | STRING
 
 '''
