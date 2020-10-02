@@ -35,12 +35,44 @@ class MyParser(Parser):
         items_list.append(p.expr_sequence1)
         return {key: copy(items_list)}
 
-    @_('NUMBER')
+    @_('var_assign "," var_assign')
     def expr(self, p):
+        items_dict = {p.var_assign0[0]: p.var_assign0[1], p.var_assign1[0]: p.var_assign1[1]}
+        return items_dict
+
+    @_('expr "," var_assign')
+    def expr(self, p):
+        items_dict = p.expr
+        items_dict[p.var_assign[0]] = p.var_assign[1]
+        return items_dict
+
+    @_('var_assign')
+    def expr(self, p):
+        items_dict = {p.var_assign[0]: p.var_assign[1]}
+        return items_dict
+
+    @_('var')
+    def expr(self, p):
+        return p.var
+
+    @_('var "=" NUMBER')
+    def var_assign(self, p):
+        return p.var, p.NUMBER
+
+    @_('var "=" STRING')
+    def var_assign(self, p):
+        return p.var, p.STRING
+
+    @_('STRING')
+    def var(self, p):
+        return p.STRING
+
+    @_('NUMBER')
+    def var(self, p):
         return p.NUMBER
 
     @_('NAME')
-    def expr(self, p):
+    def var(self, p):
         return p.NAME
 
 
@@ -50,11 +82,33 @@ if __name__ == '__main__':
 
     try:
         data = '''
-        (var1 (var3 (var5 (var6))) (var7 (var8 (543534))) (var9))
+        (main
+            (groups
+                ("IKBO-01-19")
+                ("IKBO-02-19")
+                ("IKBO-03-19")
+            )
+            (students
+                (age = 19, group = "IKBO-01-19", name = "Ivanov I.I.")
+                (age = 18, group = "IKBO-02-19", name = "Ivanov I.I.")
+                (age = 19, group = "IKBO-03-19", name = "Ivanov I.I.")
+            )
+            (subject = "Configuration management")
+        )
         '''
         result = parser.parse(lexer.tokenize(data))
-        print(result)
-        print(json.dumps(result))
+        new_result = dict()
+        for item in result['main']:
+            for key, value in item.items():
+                new_result[key] = value
+        new_result = str(new_result)
+        new_result = new_result.replace('\'"', '"')
+        new_result = new_result.replace('"\'', '"')
+        new_result = new_result.replace('\'', '"')
+        json_str = str(json.dumps(new_result))
+        json_str = json_str.replace('\\"', '"')
+        json_str = json_str[1:-1]
+        print(json_str)
     except EOFError:
         pass
 

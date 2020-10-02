@@ -11,14 +11,12 @@ class MyLexer(Lexer):
     # Токен комметария
     ignore_comment = r'\#.*'
 
-    literals = {'(', ')', '='}
+    # Литералы
+    literals = {'(', ')', '=', ','}
 
     # Регулярные выражения для токенов
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
-
-    def __init__(self):
-        self.nesting_level = 0
 
     # Токен числа
     @_(r'\d+')
@@ -31,6 +29,7 @@ class MyLexer(Lexer):
     def ignore_newline(self, t):
         self.lineno += len(t.value)
 
+    # Сообщение об ошибке
     def error(self, t):
         print('\033[91m' + 'Line %d: Bad character %r' % (self.lineno, t.value[0]) + '\033[0m')
         self.index += 1
@@ -38,7 +37,13 @@ class MyLexer(Lexer):
 
 if __name__ == '__main__':
     data = '''
-(var1 var2)
+(groups
+    ("IKBO-01-19")
+    ("IKBO-02-19")
+    ("IKBO-03-19")
+    ("IKBO-04-19")
+    ("IKBO-05-19")
+    )
 '''
     lexer = MyLexer()
     for token in lexer.tokenize(data):
