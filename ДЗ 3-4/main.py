@@ -1,27 +1,18 @@
-from MyLexer import MyLexer
-from MyParser import MyParser
+import sys
+import interpreter
 
-data = '''
-(main
-    (groups
-        ("IKBO-01-19")
-        ("IKBO-02-19")
-        ("IKBO-03-19")
-    )
-    (students
-        (age = 19, group = "IKBO-01-19", name = "Ivanov I.I.")
-        (age = 18, group = "IKBO-02-19", name = "Ivanov I.I.")
-        (age = 19, group = "IKBO-03-19", name = "Ivanov I.I.")
-    )
-    (subject = "Configuration management")
-)
-'''
-lexer = MyLexer()
+def getFileContent(path):
+    with open(path, 'r') as theFile:
+        data = theFile.read()
+        return data
 
-for token in lexer.tokenize(data):
-    print(token)
+args = sys.argv
 
-print('\nParsing:')
-parser = MyParser()
-result = parser.parse(lexer.tokenize(data))
-print(result)
+if len(args) != 2:
+    print('Error! Wrong number of arguments')
+    exit()
+
+try:
+    print(interpreter.toJson(getFileContent(args[1])))
+except FileNotFoundError:
+    print('File not found!')
