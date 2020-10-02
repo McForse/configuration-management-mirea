@@ -2,7 +2,19 @@ from MyLexer import MyLexer
 from MyParser import MyParser
 
 data = '''
-(var1 (var3 (var5 (var6))) (var7 (var8 (543534))) (var9))
+(main
+    (groups
+        ("IKBO-01-19")
+        ("IKBO-02-19")
+        ("IKBO-03-19")
+    )
+    (students
+        (age = 19, group = "IKBO-01-19", name = "Ivanov I.I.")
+        (age = 18, group = "IKBO-02-19", name = "Ivanov I.I.")
+        (age = 19, group = "IKBO-03-19", name = "Ivanov I.I.")
+    )
+    (subject = "Configuration management")
+)
 '''
 lexer = MyLexer()
 

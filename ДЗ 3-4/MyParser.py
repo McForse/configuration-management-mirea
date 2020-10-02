@@ -35,16 +35,20 @@ class MyParser(Parser):
         items_list.append(p.expr_sequence1)
         return {key: copy(items_list)}
 
+    @_('expr_list "," var_assign')
+    def expr_list(self, p):
+        items_dict = p.expr_list
+        items_dict[p.var_assign[0]] = p.var_assign[1]
+        return items_dict
+
     @_('var_assign "," var_assign')
-    def expr(self, p):
+    def expr_list(self, p):
         items_dict = {p.var_assign0[0]: p.var_assign0[1], p.var_assign1[0]: p.var_assign1[1]}
         return items_dict
 
-    @_('expr "," var_assign')
+    @_('expr_list')
     def expr(self, p):
-        items_dict = p.expr
-        items_dict[p.var_assign[0]] = p.var_assign[1]
-        return items_dict
+        return p.expr_list
 
     @_('var_assign')
     def expr(self, p):
@@ -55,13 +59,13 @@ class MyParser(Parser):
     def expr(self, p):
         return p.var
 
-    @_('var "=" NUMBER')
-    def var_assign(self, p):
-        return p.var, p.NUMBER
-
     @_('var "=" STRING')
     def var_assign(self, p):
         return p.var, p.STRING
+
+    @_('var "=" NUMBER')
+    def var_assign(self, p):
+        return p.var, p.NUMBER
 
     @_('STRING')
     def var(self, p):
@@ -102,15 +106,17 @@ if __name__ == '__main__':
             for key, value in item.items():
                 new_result[key] = value
         new_result = str(new_result)
-        new_result = new_result.replace('\'"', '"')
-        new_result = new_result.replace('"\'', '"')
-        new_result = new_result.replace('\'', '"')
+        new_result = new_result.replace('\'"', '"').replace('"\'', '"').replace('\'', '"')
         json_str = str(json.dumps(new_result))
         json_str = json_str.replace('\\"', '"')
         json_str = json_str[1:-1]
         print(json_str)
+    except KeyError:
+        print('Main section not found!')
+    except TypeError:
+        print('Syntax error!')
     except EOFError:
-        pass
+        print('EOF error!')
 
 '''
 Grammar (BNF)
@@ -123,7 +129,18 @@ expr_sequence | expr ( expr_sequence )
 expr_sequence | expr_sequence ( expr )
 expr_sequence | expr_sequence ( expr_sequence )
 
-expr    : NUMBER
-expr    | NAME
+expr_list | expr, var_assign
+expr_list | var_assign, var_assign
+
+expr | expr_list
+expr | var_assign
+expr | var
+
+var_assign : var = STRING
+var_assign | var = NUMBER
+
+var    : STRING
+var    | NUMBER
+var    | NAME
 
 '''
