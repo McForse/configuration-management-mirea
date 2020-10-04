@@ -9,7 +9,6 @@ def normalize(data):
     for i in range(len(data)):
         if type(data[i]) is str and i + 1 < len(data) and type(data[i + 1]) is list:
             new_data[data[i]] = normalize_list(data[i + 1])
-            i += 1
         elif type(data[i]) is tuple:
             new_data[data[i][0]] = data[i][1]
 
@@ -27,13 +26,21 @@ def normalize_list(data):
 
         return new_list
 
-    for item in data:
+    i = int()
+    while i < len(data):
+        item = data[i]
         itype = type(item)
 
-        if itype is str or itype is int:
+        if type(item) is str and i + 1 < len(data) and type(data[i + 1]) is list:
+            new_data.append({item: normalize_list(data[i + 1])})
+            i += 1
+        elif itype is str or itype is int:
             new_data.append(item)
-        if itype is list:
+        elif itype is list:
             new_data.append(normalize_list(item))
+        elif type(data[i]) is tuple:
+            new_data[data[i][0]] = data[i][1]
+        i += 1
 
     return new_data
 
@@ -51,7 +58,6 @@ def toJson(data):
 
     try:
         result = parser.parse(lexer.tokenize(data))
-        print(result)
         new_result = normalize(result)
         json_str = json.dumps(new_result, indent=4, ensure_ascii=False)
         json_str = json_str.replace('"\\\"', '"').replace('\\""', '"')
