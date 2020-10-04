@@ -12,7 +12,7 @@ class MyLexer(Lexer):
     ignore_comment = r'\#.*'
 
     # Литералы
-    literals = {'(', ')', '=', ','}
+    literals = {'(', ')', '='}
 
     # Регулярные выражения для токенов
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
