@@ -55,8 +55,6 @@ def toJson(data):
         json_str = json.dumps(new_result, indent=4)
         json_str = json_str.replace('"\\\"', '"').replace('\\""', '"')
         return json_str
-    except KeyError:
-        return 'Main section not found!'
     except TypeError:
         return 'Syntax error!'
     except EOFError:
