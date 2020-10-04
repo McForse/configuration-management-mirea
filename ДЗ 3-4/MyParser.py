@@ -63,8 +63,8 @@ program    : expr
 expr       : ( expr_list )
 expr       | data
 
-expr_list  | expr expr_list
-expr_list  : expr expr
+expr_list  : expr expr_list
+expr_list  | expr expr
 
 data       : var_assign
 data       | var

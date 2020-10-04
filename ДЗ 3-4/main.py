@@ -1,10 +1,12 @@
 import sys
 import interpreter
 
+
 def getFileContent(path):
     with open(path, 'r') as theFile:
         data = theFile.read()
         return data
+
 
 args = sys.argv
 
