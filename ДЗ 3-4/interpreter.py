@@ -51,8 +51,9 @@ def toJson(data):
 
     try:
         result = parser.parse(lexer.tokenize(data))
+        print(result)
         new_result = normalize(result)
-        json_str = json.dumps(new_result, indent=4)
+        json_str = json.dumps(new_result, indent=4, ensure_ascii=False,)
         json_str = json_str.replace('"\\\"', '"').replace('\\""', '"')
         return json_str
     except TypeError:
