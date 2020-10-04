@@ -5,7 +5,7 @@ import interpreter
 def generate():
     output.configure(state='normal')
     output.delete('1.0', END)
-    output.insert(1.0, interpreter.toJson(code.get("1.0",END)))
+    output.insert(1.0, interpreter.toJson(code.get("1.0", END)))
 
 
 root = Tk()
