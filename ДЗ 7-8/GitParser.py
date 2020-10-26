@@ -91,7 +91,7 @@ class GitParser:
                     rcontents.append((filemode, filename, sha1))
                     self.objects[hash] = Tree(rcontents)
 
-    def showGraph(self):
+    def getGraph(self):
         graph = Digraph(name='Commits Graph')
 
         for h, obj in self.objects.items():
@@ -106,4 +106,5 @@ class GitParser:
                 graph.edge(h, obj.tree)
                 if obj.parent is not None:
                     graph.edge(h, obj.parent)
-        graph.render('test/graph.gv', view=True)
+
+        return graph.source
