@@ -35,6 +35,7 @@ class GitParser:
             raise ValueError('Git objects folder does not exist!')
 
         self.getHashes()
+        self.fillObjects()
 
     def getHashes(self):
         self.hashes.clear()
@@ -57,7 +58,8 @@ class GitParser:
             contents = data.split(b'\x00', maxsplit=1)[1]
 
             if object_type == 'blob':
-                self.objects[hash] = Blob(contents.decode())
+                #self.objects[hash] = Blob(contents.decode())
+                pass
             elif object_type == 'commit':
                 rcontents = contents.decode().splitlines()
                 tree = None
@@ -89,13 +91,19 @@ class GitParser:
                     rcontents.append((filemode, filename, sha1))
                     self.objects[hash] = Tree(rcontents)
 
-    def getGraph(self):
+    def showGraph(self):
         graph = Digraph(name='Commits Graph')
-        # TODO
 
-
-if __name__ == '__main__':
-    gp = GitParser('/Users/danil/Desktop/test')
-    print(gp.hashes)
-    gp.fillObjects()
-    print(gp.objects)
+        for h, obj in self.objects.items():
+            if type(obj) is Tree:
+                graph.node(h, 'TREE' + '\n' + h)
+                for item in obj.elements:
+                    if item[0] == '100644':  # blob
+                        graph.node(item[2], 'BLOB ' + item[1] + '\n' + item[2])
+                    graph.edge(h, item[2])
+            if type(obj) is Commit:
+                graph.node(h, 'COMMIT ' + obj.message + '\n' + h)
+                graph.edge(h, obj.tree)
+                if obj.parent is not None:
+                    graph.edge(h, obj.parent)
+        graph.render('test/graph.gv', view=True)

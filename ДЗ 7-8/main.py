@@ -12,5 +12,6 @@ path = args[1]
 
 try:
     parser = GitParser(path)
+    parser.showGraph()
 except ValueError:
     traceback.print_exc()
