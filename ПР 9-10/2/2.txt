@@ -1,0 +1,8 @@
+Список команд для работы с QEMU:
+- Для запуска Alpine Linux:
+    1) qemu-img create -f qcow disk.img 500M - создание образа жесткого диска размером 500 Мб.
+    2) qemu-system-x86_64 -hda disk.img -cdrom alpine-standard-3.12.1-x86_64.iso -boot d - запуск Alpine Linux с CD-ROM.
+- Для установки Alpine Linux:
+setup-alpine
+- Для изменения motd:
+vi /etc/motd
