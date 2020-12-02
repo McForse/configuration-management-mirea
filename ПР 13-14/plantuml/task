@@ -1,0 +1,45 @@
+@startuml
+
+skinparam shadowing false
+skinparam monochrome true
+
+actor "Студент Ворожейкин Д.А." as s
+database Piazza as p
+actor "Преподаватель" as pro
+
+pro -> p: Публикация задачи
+activate p
+pro <-- p: Задача опубликованв
+deactivate p
+
+...
+
+s -> p: Поиск задач
+activate p
+s <-- p: Получение задачи
+deactivate p
+
+...
+
+s -> p: Публикация решения
+activate p
+s <-- p: Решение опубликовано
+deactivate p
+
+...
+
+pro -> p: Поиск решения
+activate p
+pro <-- p: Решение найдено
+pro -> p: Публикация оценки
+pro <-- p: Оценка опубликована
+deactivate p
+
+...
+
+s -> p: Проверка оценки
+activate p
+s <-- p: Оценка получена
+deactivate p
+
+@enduml
