@@ -1,3 +1,6 @@
 [submodule "ДЗ 1-2"]
 	path = ДЗ 1-2
 	url = https://github.com/McForse/npm-dependencies-graphviz.git
+[submodule "ПР 13-14/doxygen"]
+	path = ПР 13-14/doxygen
+	url = https://github.com/McForse/Genetic-Algorithm.git

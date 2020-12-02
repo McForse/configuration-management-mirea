@@ -1,0 +1,54 @@
+\documentclass{article}\usepackage{noweb}\pagestyle{noweb}\noweboptions{}\begin{document}\nwfilename{1.nw}\nwbegindocs{0}\section*{Сортировка вставками}% ===> this file was generated automatically by noweave --- better not edit it
+
+Рассмотрим реализацию алгоритма сортировки одномерного массива методом вставок.
+
+\nwenddocs{}\nwbegincode{1}\moddef{insertionSort.py}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+def insertion_sort(arr):
+    \LA{}Основной цикл\RA{}
+\nwendcode{}\nwbegindocs{2}\nwdocspar
+
+Создаём цикл, проходящий по массиву arr, начиная со второго элемента, так как считается, что первый элемент уже отсортирован
+
+\nwenddocs{}\nwbegincode{3}\moddef{Основной цикл}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+for i in range(1, len(arr)):
+    \LA{}Сохранение текущего элемента\RA{}
+    \LA{}Сохранение индекса предыдущего числа\RA{}
+    \LA{}Поиск позиции для вставки\RA{}
+    \LA{}Вставка элемента\RA{}
+\nwendcode{}\nwbegindocs{4}\nwdocspar
+
+Сохраним число из массива с индексом \texttt{i} в переменную \texttt{item}.
+
+\nwenddocs{}\nwbegincode{5}\moddef{Сохранение текущего элемента}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+item = arr[i]
+\nwendcode{}\nwbegindocs{6}\nwdocspar
+
+Сохраним индекса предыдущего числа в переменную \texttt{j}
+
+\nwenddocs{}\nwbegincode{7}\moddef{Сохранение индекса предыдущего числа}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+j = i - 1
+\nwendcode{}\nwbegindocs{8}\nwdocspar
+
+С помощью цикла \texttt{while} находим такую позицию в массиве, при которой число в переменной \texttt{item} будет меньше чем \texttt{arr[j]}.
+
+\nwenddocs{}\nwbegincode{9}\moddef{Поиск позиции для вставки}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+while j >= 0 and arr[j] > item:
+    \LA{}Сдвиг элементов в массиве\RA{}
+    j -= 1
+\nwendcode{}\nwbegindocs{10}\nwdocspar
+
+При каждой итерации цикла \texttt{while} сдвигаем элемент массива с индексом \texttt{j} на одну позиции вперёд.
+
+\nwenddocs{}\nwbegincode{11}\moddef{Сдвиг элементов в массиве}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+arr[j + 1] = arr[j]
+\nwendcode{}\nwbegindocs{12}\nwdocspar
+
+Производим вставку элемента в массив по индексу \texttt{j + 1}
+
+\nwenddocs{}\nwbegincode{13}\moddef{Вставка элемента}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+arr[j + 1] = item
+\nwendcode{}\nwbegindocs{14}\nwdocspar
+
+\footnote{Разработал Ворожейкин Д.А. ИКБО-01-19}
+\nwenddocs{}\end{document}
+

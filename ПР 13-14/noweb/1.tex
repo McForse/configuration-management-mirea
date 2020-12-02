@@ -1,0 +1,62 @@
+\section*{Сортировка вставками}% ===> this file was generated automatically by noweave --- better not edit it
+
+Рассмотрим реализацию алгоритма сортировки одномерного массива методом вставок.
+
+\nwfilename{1.nw}\nwbegincode{1}\sublabel{NW3BNbvx-1nZaX0-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-1nZaX0-1}}}\moddef{insertionSort.py~{\nwtagstyle{}\subpageref{NW3BNbvx-1nZaX0-1}}}\endmoddef\let\nwnotused=\nwoutput{}\nwstartdeflinemarkup\nwenddeflinemarkup
+def insertion\\_sort(arr):
+    \LA{}Основной цикл~{\nwtagstyle{}\subpageref{NW3BNbvx-28psz6-1}}\RA{}
+\nwnotused{insertionSort.py}\nwendcode{}\nwbegindocs{2}\nwdocspar
+
+Создаём цикл, проходящий по массиву arr, начиная со второго элемента, так как считается, что первый элемент уже отсортирован
+
+\nwenddocs{}\nwbegincode{3}\sublabel{NW3BNbvx-28psz6-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-28psz6-1}}}\moddef{Основной цикл~{\nwtagstyle{}\subpageref{NW3BNbvx-28psz6-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-1nZaX0-1}}\nwenddeflinemarkup
+for i in range(1, len(arr)):
+    \LA{}Сохранение текущего элемента~{\nwtagstyle{}\subpageref{NW3BNbvx-CtWO2-1}}\RA{}
+    \LA{}Сохранение индекса предыдущего числа~{\nwtagstyle{}\subpageref{NW3BNbvx-cAWZP-1}}\RA{}
+    \LA{}Поиск позиции для вставки~{\nwtagstyle{}\subpageref{NW3BNbvx-Kvcyt-1}}\RA{}
+    \LA{}Вставка элемента~{\nwtagstyle{}\subpageref{NW3BNbvx-gnA3v-1}}\RA{}
+\nwused{\\{NW3BNbvx-1nZaX0-1}}\nwendcode{}\nwbegindocs{4}\nwdocspar
+
+Сохраним число из массива с индексом \texttt{i} в переменную \texttt{item}.
+
+\nwenddocs{}\nwbegincode{5}\sublabel{NW3BNbvx-CtWO2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-CtWO2-1}}}\moddef{Сохранение текущего элемента~{\nwtagstyle{}\subpageref{NW3BNbvx-CtWO2-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-28psz6-1}}\nwenddeflinemarkup
+item = arr[i]
+\nwused{\\{NW3BNbvx-28psz6-1}}\nwendcode{}\nwbegindocs{6}\nwdocspar
+
+Сохраним индекса предыдущего числа в переменную \texttt{j}
+
+\nwenddocs{}\nwbegincode{7}\sublabel{NW3BNbvx-cAWZP-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-cAWZP-1}}}\moddef{Сохранение индекса предыдущего числа~{\nwtagstyle{}\subpageref{NW3BNbvx-cAWZP-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-28psz6-1}}\nwenddeflinemarkup
+j = i - 1
+\nwused{\\{NW3BNbvx-28psz6-1}}\nwendcode{}\nwbegindocs{8}\nwdocspar
+
+С помощью цикла \texttt{while} находим такую позицию в массиве, при которой число в переменной \texttt{item} будет меньше чем \texttt{arr[j]}.
+
+\nwenddocs{}\nwbegincode{9}\sublabel{NW3BNbvx-Kvcyt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-Kvcyt-1}}}\moddef{Поиск позиции для вставки~{\nwtagstyle{}\subpageref{NW3BNbvx-Kvcyt-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-28psz6-1}}\nwenddeflinemarkup
+while j >= 0 and arr[j] > item:
+    \LA{}Сдвиг элементов в массиве~{\nwtagstyle{}\subpageref{NW3BNbvx-625CA-1}}\RA{}
+    j -= 1
+\nwused{\\{NW3BNbvx-28psz6-1}}\nwendcode{}\nwbegindocs{10}\nwdocspar
+
+При каждой итерации цикла \texttt{while} сдвигаем элемент массива с индексом \texttt{j} на одну позиции вперёд.
+
+\nwenddocs{}\nwbegincode{11}\sublabel{NW3BNbvx-625CA-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-625CA-1}}}\moddef{Сдвиг элементов в массиве~{\nwtagstyle{}\subpageref{NW3BNbvx-625CA-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-Kvcyt-1}}\nwenddeflinemarkup
+arr[j + 1] = arr[j]
+\nwused{\\{NW3BNbvx-Kvcyt-1}}\nwendcode{}\nwbegindocs{12}\nwdocspar
+
+Производим вставку элемента в массив по индексу \texttt{j + 1}
+
+\nwenddocs{}\nwbegincode{13}\sublabel{NW3BNbvx-gnA3v-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BNbvx-gnA3v-1}}}\moddef{Вставка элемента~{\nwtagstyle{}\subpageref{NW3BNbvx-gnA3v-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3BNbvx-28psz6-1}}\nwenddeflinemarkup
+arr[j + 1] = item
+\nwused{\\{NW3BNbvx-28psz6-1}}\nwendcode{}
+
+\nwixlogsorted{c}{{insertionSort.py}{NW3BNbvx-1nZaX0-1}{\nwixd{NW3BNbvx-1nZaX0-1}}}%
+\nwixlogsorted{c}{{Вставка элемента}{NW3BNbvx-gnA3v-1}{\nwixu{NW3BNbvx-28psz6-1}\nwixd{NW3BNbvx-gnA3v-1}}}%
+\nwixlogsorted{c}{{Основной цикл}{NW3BNbvx-28psz6-1}{\nwixu{NW3BNbvx-1nZaX0-1}\nwixd{NW3BNbvx-28psz6-1}}}%
+\nwixlogsorted{c}{{Поиск позиции для вставки}{NW3BNbvx-Kvcyt-1}{\nwixu{NW3BNbvx-28psz6-1}\nwixd{NW3BNbvx-Kvcyt-1}}}%
+\nwixlogsorted{c}{{Сдвиг элементов в массиве}{NW3BNbvx-625CA-1}{\nwixu{NW3BNbvx-Kvcyt-1}\nwixd{NW3BNbvx-625CA-1}}}%
+\nwixlogsorted{c}{{Сохранение индекса предыдущего числа}{NW3BNbvx-cAWZP-1}{\nwixu{NW3BNbvx-28psz6-1}\nwixd{NW3BNbvx-cAWZP-1}}}%
+\nwixlogsorted{c}{{Сохранение текущего элемента}{NW3BNbvx-CtWO2-1}{\nwixu{NW3BNbvx-28psz6-1}\nwixd{NW3BNbvx-CtWO2-1}}}%
+\nwbegindocs{14}\nwdocspar
+
+\footnote{Разработал Ворожейкин Д.А. ИКБО-01-19}
+\nwenddocs{}
