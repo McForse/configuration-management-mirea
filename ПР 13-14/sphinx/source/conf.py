@@ -34,7 +34,8 @@ extensions = [
     'sphinx_rtd_theme',
     'sphinx.ext.autodoc',
     'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.graphviz'
+    'sphinx.ext.graphviz',
+    'sphinxcontrib.plantuml'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -68,3 +69,5 @@ html_static_path = ['_static']
 html_show_sourcelink = False
 
 graphviz_dot = 'dot'
+
+plantuml = "java -jar '/Users/danil/PycharmProjects/configuration-management-mirea/ПР 13-14/sphinx/plantuml.jar'"
